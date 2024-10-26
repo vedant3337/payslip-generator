@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Welcome | Payslip Generator</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"
+    />
+
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Poppins", sans-serif;
+        background-color: #f3f4f6;
+        color: #333;
+      }
+
+      .header {
+        background: linear-gradient(135deg, #007bff, #00457c);
+        padding: 40px;
+        text-align: center;
+        color: #fff;
+      }
+
+      .header h1 {
+        font-size: 3rem;
+        margin-bottom: 10px;
+        font-weight: 600;
+      }
+
+      .header p {
+        font-size: 1.3rem;
+        margin-bottom: 20px;
+      }
+
+      .container {
+        width: 40%;
+        margin: 80px auto;
+        padding: 40px;
+        background-color: #fff;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        border-radius: 12px;
+        text-align: center;
+      }
+
+      .container h2 {
+        font-size: 2rem;
+        margin-bottom: 20px;
+        color: #00457c;
+        font-weight: 600;
+      }
+
+      .container p {
+        font-size: 1.1rem;
+        margin-bottom: 30px;
+        color: #555;
+      }
+
+      .buttons {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+        align-items: center;
+      }
+
+      button {
+        padding: 15px 35px;
+        border: none;
+        border-radius: 5px;
+        background-color: #007bff;
+        color: white;
+        font-size: 1rem;
+        font-weight: bold;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        width: 60%;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .advertise {
+        background-color: #e9f7fe;
+        padding: 40px;
+        text-align: center;
+        border: 1px solid #007bff;
+        border-radius: 10px;
+        margin: 50px auto;
+        width: 80%;
+        transition: transform 0.3s ease-in-out;
+      }
+
+      .advertise:hover {
+        transform: translateX(20px);
+      }
+
+      .advertise h3 {
+        font-size: 1.8rem;
+        margin-bottom: 10px;
+        color: #007bff;
+      }
+
+      .advertise p {
+        font-size: 1.1rem;
+        color: #333;
+        margin-bottom: 20px;
+      }
+
+      .advertise a {
+        padding: 12px 30px;
+        background-color: #007bff;
+        color: white;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+      }
+
+      .advertise a:hover {
+        background-color: #0056b3;
+      }
+
+      .contact-us {
+        margin-top: 50px;
+        background-color: #f8f9fa;
+        padding: 40px;
+        text-align: center;
+        border-top: 1px solid #ddd;
+      }
+
+      .contact-us h3 {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        color: #333;
+      }
+
+      .contact-us p {
+        font-size: 1rem;
+        color: #555;
+        margin-bottom: 10px;
+      }
+
+      .contact-us a {
+        color: #007bff;
+        text-decoration: none;
+      }
+
+      .contact-us a:hover {
+        text-decoration: underline;
+      }
+
+      footer {
+        text-align: center;
+        padding: 20px;
+        background-color: #f3f4f6;
+        font-size: 0.9rem;
+        color: #555;
+        border-top: 1px solid #ddd;
+      }
+
+      footer p {
+        margin-bottom: 5px;
+      }
+
+      footer .social-icons {
+        margin-top: 10px;
+      }
+
+      footer .social-icons img {
+        width: 25px;
+        margin: 0 10px;
+        cursor: pointer;
+        transition: opacity 0.3s ease;
+      }
+
+      footer .social-icons img:hover {
+        opacity: 0.7;
+      }
+
+      @media (max-width: 768px) {
+        .container {
+          width: 80%;
+          padding: 20px;
+        }
+
+        button {
+          width: 80%;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <header class="header">
+      <h1>Techwave Trading and Co.</h1>
+      <p>Efficient Payroll & Employee Management Made Simple</p>
+    </header>
+
+    <div class="container">
+      <h2>Welcome to the Employee Payslip System</h2>
+      <p>Select your option to proceed:</p>
+      <div class="buttons">
+        <button id="employeeRegistration">Employee Registration</button>
+        <button id="downloadPayslip">Download Payslip</button>
+        <button id="adminLogin">Admin Login</button>
+      </div>
+    </div>
+
+    <section class="contact-us">
+      <h3>Contact Us</h3>
+      <p>Have questions or need support? Reach out to our team:</p>
+      <p>
+        Email: <a href="mailto:support@techwave.com">support@techwave.com</a>
+      </p>
+      <p>Phone: <a href="tel:+918200191370">+91 8200191370</a></p>
+    </section>
+
+    <footer>
+      <p>&copy; 2024 Techwave Trading and Co. All Rights Reserved.</p>
+      <div class="social-icons">
+        <a href="https://www.linkedin.com" target="_blank"
+          ><i class="fab fa-linkedin fa-2x"></i
+        ></a>
+        <a href="https://twitter.com" target="_blank"
+          ><i class="fab fa-twitter fa-2x"></i
+        ></a>
+        <a href="https://www.facebook.com" target="_blank"
+          ><i class="fab fa-facebook fa-2x"></i
+        ></a>
+      </div>
+    </footer>
+
+    <script>
+      document
+        .getElementById("employeeRegistration")
+        .addEventListener("click", function () {
+          window.location.href = "/index"; // Redirect to employee registration
+        });
+
+      document
+        .getElementById("downloadPayslip")
+        .addEventListener("click", function () {
+          window.location.href = "/download-payslip"; // Redirect to payslip download
+        });
+
+      document
+        .getElementById("adminLogin")
+        .addEventListener("click", function () {
+          window.location.href = "/admin"; // Redirect to admin login
+        });
+    </script>
+  </body>
+</html>

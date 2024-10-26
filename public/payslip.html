@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Payslip Download</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 50%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        border-radius: 10px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input,
+      select,
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+      }
+
+      button {
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+
+      .payslip {
+        margin-top: 30px;
+        padding: 20px;
+        border: 1px solid #ccc;
+        background-color: #fafafa;
+        border-radius: 5px;
+        display: none;
+      }
+
+      .payslip h2 {
+        color: #333;
+      }
+
+      p {
+        font-size: 1rem;
+        line-height: 1.5;
+      }
+
+      #printButton {
+        margin-top: 20px;
+        padding: 10px 15px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      #printButton:hover {
+        background-color: #0056b3;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Payslip Download</h1>
+      <form id="payslipForm">
+        <label for="employeeId">Enter Employee ID:</label>
+        <input type="text" id="employeeId" required />
+        <button type="submit">Fetch Payslip</button>
+      </form>
+
+      <div id="payslipOutput" class="payslip">
+        <!-- Payslip details will be generated here -->
+      </div>
+
+      <button id="printButton" class="hidden">Print Payslip</button>
+    </div>
+
+    <script>
+      // Fetch and display the payslip
+      document
+        .getElementById("payslipForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const employeeId = document.getElementById("employeeId").value;
+
+          try {
+            const response = await fetch(
+              `/api/employees/getPayslip/${employeeId}`
+            );
+            if (response.ok) {
+              const payslipData = await response.json();
+
+              const payslipOutput = document.getElementById("payslipOutput");
+              payslipOutput.innerHTML = `
+                        <h2>Payslip for ${payslipData.employeeName}</h2>
+                        <p><strong>Post:</strong> ${payslipData.post}</p>
+                        <p><strong>Basic Salary:</strong> ₹${payslipData.basicSalary.toFixed(
+                          2
+                        )}</p>
+                        <p><strong>Allowances:</strong> ₹${payslipData.allowances.toFixed(
+                          2
+                        )}</p>
+                        <p><strong>Bonuses:</strong> ₹${payslipData.bonuses.toFixed(
+                          2
+                        )}</p>
+                        <p><strong>Gross Salary:</strong> ₹${(
+                          payslipData.basicSalary +
+                          payslipData.allowances +
+                          payslipData.bonuses
+                        ).toFixed(2)}</p>
+                        <h3>Deductions</h3>
+                        <p><strong>pf:</strong> ₹${payslipData.pf.toFixed(
+                          2
+                        )}</p>
+                        <p><strong>tax:</strong> ₹${payslipData.tax.toFixed(
+                          2
+                        )}</p>
+                        <p><strong>Total Deductions:</strong> ₹${payslipData.deductions.toFixed(
+                          2
+                        )}</p>
+                        <p><strong>Net Salary:</strong> ₹${payslipData.netSalary.toFixed(
+                          2
+                        )}</p>
+                    `;
+
+              // Show the payslip and print button
+              payslipOutput.style.display = "block";
+              document.getElementById("printButton").classList.remove("hidden");
+            } else {
+              alert("Payslip not found or Employee ID is incorrect.");
+            }
+          } catch (error) {
+            alert("Error fetching payslip: " + error.message);
+          }
+        });
+
+      // Print the payslip
+      document
+        .getElementById("printButton")
+        .addEventListener("click", function () {
+          window.print();
+        });
+    </script>
+  </body>
+</html>

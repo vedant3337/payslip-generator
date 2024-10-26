@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Admin Page - Set Salary Details</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 50%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        border-radius: 10px;
+      }
+
+      h1,
+      h2 {
+        text-align: center;
+        color: #333;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input,
+      select,
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+      }
+
+      button {
+        background-color: #007bff;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #0056b3;
+      }
+
+      .hidden {
+        display: none;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Admin Login</h1>
+      <form id="adminLoginForm">
+        <label for="username">Username:</label>
+        <input type="text" id="username" required />
+
+        <label for="password">Password:</label>
+        <input type="password" id="password" required />
+
+        <button type="submit">Login</button>
+      </form>
+
+      <div id="adminControls" class="hidden">
+        <h2>Set Salary Details for Each Post</h2>
+        <form id="salaryForm">
+          <label>Manager Basic Salary:</label>
+          <input
+            type="number"
+            id="managerSalary"
+            placeholder="Enter Manager Salary"
+            required
+          />
+
+          <label>Manager Allowances (%):</label>
+          <input
+            type="number"
+            id="managerAllowance"
+            placeholder="Enter Allowance Percentage"
+            required
+          />
+
+          <label>Manager Bonus (%):</label>
+          <input
+            type="number"
+            id="managerBonus"
+            placeholder="Enter Bonus Percentage"
+            required
+          />
+
+          <label>Engineer Basic Salary:</label>
+          <input
+            type="number"
+            id="engineerSalary"
+            placeholder="Enter Engineer Salary"
+            required
+          />
+
+          <label>Engineer Allowances (%):</label>
+          <input
+            type="number"
+            id="engineerAllowance"
+            placeholder="Enter Allowance Percentage"
+            required
+          />
+
+          <label>Engineer Bonus (%):</label>
+          <input
+            type="number"
+            id="engineerBonus"
+            placeholder="Enter Bonus Percentage"
+            required
+          />
+
+          <label>Clerk Basic Salary:</label>
+          <input
+            type="number"
+            id="clerkSalary"
+            placeholder="Enter Clerk Salary"
+            required
+          />
+
+          <label>Clerk Allowances (%):</label>
+          <input
+            type="number"
+            id="clerkAllowance"
+            placeholder="Enter Allowance Percentage"
+            required
+          />
+
+          <label>Clerk Bonus (%):</label>
+          <input
+            type="number"
+            id="clerkBonus"
+            placeholder="Enter Bonus Percentage"
+            required
+          />
+
+          <button type="submit">Save Settings</button>
+        </form>
+      </div>
+    </div>
+
+    <script>
+      // Admin login form logic
+      document
+        .getElementById("adminLoginForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+
+          const username = document.getElementById("username").value;
+          const password = document.getElementById("password").value;
+
+          // Simple username and password check
+          if (username === "vedant" && password === "admin") {
+            alert("Login successful!");
+            document.getElementById("adminLoginForm").classList.add("hidden");
+            document.getElementById("adminControls").classList.remove("hidden");
+          } else {
+            alert("Invalid credentials. Try again.");
+          }
+        });
+
+      // Salary form save logic
+      document
+        .getElementById("salaryForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+
+          // Collect values for each post
+          const salaryDetails = [
+            {
+              post: "manager",
+              salary: document.getElementById("managerSalary").value,
+              allowance: document.getElementById("managerAllowance").value,
+              bonus: document.getElementById("managerBonus").value,
+            },
+            {
+              post: "engineer",
+              salary: document.getElementById("engineerSalary").value,
+              allowance: document.getElementById("engineerAllowance").value,
+              bonus: document.getElementById("engineerBonus").value,
+            },
+            {
+              post: "clerk",
+              salary: document.getElementById("clerkSalary").value,
+              allowance: document.getElementById("clerkAllowance").value,
+              bonus: document.getElementById("clerkBonus").value,
+            },
+          ];
+
+          try {
+            // Send salary details to the server to store in MongoDB
+            const response = await fetch("/api/salaries/saveSalaryDetails", {
+              method: "PUT",
+              headers: {
+                "Content-Type": "application/json",
+              },
+              body: JSON.stringify(salaryDetails),
+            });
+
+            const result = await response.json();
+
+            if (response.ok) {
+              alert("Salary settings saved successfully!");
+              setTimeout(() => {
+                window.location.href = "/"; // Redirect to the desired page
+              }, 1000);
+            } else {
+              throw new Error(result.error || "Failed to save salary settings");
+              setTimeout(() => {
+                window.location.href = "/"; // Redirect to the desired page
+              }, 1000);
+            }
+          } catch (error) {
+            alert(error.message);
+            setTimeout(() => {
+              window.location.href = "/"; // Redirect to the desired page
+            }, 1000);
+          }
+        });
+    </script>
+  </body>
+</html>

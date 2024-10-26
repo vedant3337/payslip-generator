@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Employee Registration</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+      }
+
+      .container {
+        width: 50%;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #fff;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+        border-radius: 10px;
+      }
+
+      h1 {
+        text-align: center;
+        color: #333;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+      }
+
+      label {
+        font-weight: bold;
+      }
+
+      input,
+      select,
+      button {
+        padding: 10px;
+        border-radius: 5px;
+        border: 1px solid #ccc;
+        font-size: 1rem;
+      }
+
+      button {
+        background-color: #28a745;
+        color: white;
+        cursor: pointer;
+      }
+
+      button:hover {
+        background-color: #218838;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>Employee Registration</h1>
+      <form id="registrationForm">
+        <label for="employeeName">Employee Name:</label>
+        <input type="text" id="employeeName" required />
+
+        <label for="employeeId">Employee ID:</label>
+        <input type="text" id="employeeId" required />
+
+        <label for="post">Employee Post:</label>
+        <select id="post" required>
+          <option value="">Select Post</option>
+          <option value="manager">Manager</option>
+          <option value="engineer">Engineer</option>
+          <option value="clerk">Clerk</option>
+        </select>
+
+        <button type="submit">Register</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("registrationForm")
+        .addEventListener("submit", async function (e) {
+          e.preventDefault();
+          const employeeName = document.getElementById("employeeName").value;
+          const employeeId = document.getElementById("employeeId").value;
+          const post = document.getElementById("post").value;
+
+          const registrationData = { employeeName, employeeId, post };
+
+          try {
+            const response = await fetch("/api/employees/register-employee", {
+              method: "POST",
+              headers: { "Content-Type": "application/json" },
+              body: JSON.stringify(registrationData),
+            });
+
+            const result = await response.json();
+            if (response.ok) {
+              alert(result.message);
+              setTimeout(() => {
+                window.location.href = "/"; // Redirect to the desired page
+              }, 1000);
+            } else {
+              alert(result.error);
+              setTimeout(() => {
+                window.location.href = "/"; // Redirect to the desired page
+              }, 1000);
+            }
+          } catch (error) {
+            alert("Error during registration: " + error.message);
+            setTimeout(() => {
+              window.location.href = "/"; // Redirect to the desired page
+            }, 1000);
+          }
+        });
+    </script>
+  </body>
+</html>
